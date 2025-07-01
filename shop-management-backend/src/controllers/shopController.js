@@ -20,3 +20,13 @@ exports.createShop = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+// Delete a shop by ID
+exports.deleteShop = async (req, res) => {
+  try {
+    await Shop.findByIdAndDelete(req.params.id);
+    res.status(204).end();
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

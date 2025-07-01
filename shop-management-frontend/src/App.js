@@ -1,53 +1,16 @@
-import 'src/global.css';
-
-import React, { useEffect } from 'react';
-
-import Fab from '@mui/material/Fab';
-
-import { ThemeProvider } from './theme/theme-provider';
-
-import { Iconify } from './components/iconify';
-
-import ShopList from './components/ShopList'; // Adjust path if needed
-
-// Optional: useScrollToTop hook
-function useScrollToTop() {
-  // If you don't have usePathname, just use window.scrollTo on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-}
+import React from 'react';
+import ShopList from './ShopList';      // or './components/ShopList' if it's in a folder
+import AddShop from './AddShop';        // or './components/AddShop'
 
 function App() {
-  useScrollToTop();
-
-  const githubButton = () => (
-    <Fab
-      size="medium"
-      aria-label="Github"
-      href="https://github.com/minimal-ui-kit/material-kit-react"
-      sx={{
-        zIndex: 9,
-        right: 20,
-        bottom: 20,
-        width: 48,
-        height: 48,
-        position: 'fixed',
-        bgcolor: 'grey.800',
-      }}
-    >
-      <Iconify width={24} icon="socials:github" sx={{ '--color': 'white' }} />
-    </Fab>
-  );
+  const [refresh, setRefresh] = React.useState(false);
 
   return (
-    <ThemeProvider>
-      <div>
-        <h1>Shop Management Dashboard</h1>
-        <ShopList />
-      </div>
-      {githubButton()}
-    </ThemeProvider>
+    <div style={{ maxWidth: 900, margin: '40px auto', padding: 24 }}>
+      <h1>Shop Management Dashboard</h1>
+      <AddShop onShopAdded={() => setRefresh(r => !r)} />
+      <ShopList key={refresh} />
+    </div>
   );
 }
 
